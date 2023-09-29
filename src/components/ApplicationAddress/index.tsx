@@ -11,7 +11,7 @@ const ApplicationAddress = ({ options, onChnageAddress }: { options: { label: st
                 <div className="justify-self-end text-white"><span>Upload File</span></div>
             </div>
 
-            <div className='bg-black h-64 p-10 flex flex-cols'>
+            <div className='bg-black h-96 p-10 flex flex-cols'>
                 <div className='py-2 flex flex-col pr-3 border-r gap-y-4'>
                     {
                         options.map((data, index) => {
@@ -34,7 +34,7 @@ const ApplicationAddress = ({ options, onChnageAddress }: { options: { label: st
 
                                             <ApplicationInputFiled value={data.label} onChnageInputField={onChnageAddressFeild} />
 
-                                            : <span key={index} className='text-white'>
+                                            : <span key={index} className='text-white whitespace-pre-line'>
                                                 {data.label}
                                             </span>
                                     }
