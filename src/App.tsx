@@ -17,30 +17,33 @@ function App() {
   let [disableNext, setNextDisable] = useState(false)
 
   const onChnageAddress = (value: string) => {
-    let isAddNew = false
-    let _address = addresses.map((data) => {
-      if (data.isActive) {
-        if (data.label === value) {
-          isAddNew = true
-          data.isActive = false
-        } else {
-          data.label = value
-        }
+    let arrayOfAddress = value.split(" ")
+    let newAddressList = arrayOfAddress.reduce((acc: any, cuurentAddress, nextAddress) => {
+      let equalIndex = cuurentAddress.includes("=");
+      let commaIndex = cuurentAddress.includes(",");
+      let newLabel = cuurentAddress.replace("\n","")
+      let details = {
+        label: "",
+        value: String(acc.length + 1),
+        isActive: false
       }
-      return data
-    })
-    const newObject = {
-      label: "",
-      value: String(_address.length + 1),
-      isActive: true
-    }
-    _address = isAddNew ? [..._address, newObject] : [..._address]
-
-    setAddress(_address)
+      if (equalIndex) {
+        details.label = newLabel
+        acc.push(details)
+      } else if (commaIndex) {
+        details.label = newLabel
+        acc.push(details)
+      } else if (cuurentAddress.length > 5) {
+        details.label = `${newLabel} ${arrayOfAddress[nextAddress + 1]}`
+        acc.push(details)
+      }
+      return acc
+    }, [],)
+    
+    setAddress(newAddressList)
   }
 
   const onClickNextButton = () => {
-    
     let addressError = addresses.map((data) => {
       const indexOfCommona = data.label.indexOf(",");
       const indexOfSpace = data.label.indexOf(" ");
@@ -95,23 +98,25 @@ function App() {
       }
       return acc
     }, [])
-    duplicateAddress = duplicateAddress.filter((data:any) => data.duplicateLineNo.length !== 0)
+    duplicateAddress = duplicateAddress.filter((data: any) => data.duplicateLineNo.length !== 0)
     setErrorArray(addressError)
     setDuplicateAddresses(duplicateAddress)
-    if(duplicateAddress.length !==0 || addressError.length !== 0){
+    if (duplicateAddress.length !== 0 || addressError.length !== 0) {
       setNextDisable(true)
     }
-    
+
   }
 
   const onClickKeepFirth = () => {
     let removeDuplicate = addresses.reduce((acc: any, data) => {
       const index = acc.find((amount: any) => amount.label === data.label)
+      console.log("index",index)
       if (index === undefined) {
         acc.push(data)
       }
       return acc
     }, [])
+    console.log("removeDuplicate",removeDuplicate)
     setAddress(removeDuplicate)
     setDuplicateAddresses([])
     setNextDisable(false)
@@ -141,7 +146,7 @@ function App() {
           : null
       }
 
-      <ApplicationActionButton name='Next' onClickButton={onClickNextButton} disableNext={disableNext}/>
+      <ApplicationActionButton name='Next' onClickButton={onClickNextButton} disableNext={disableNext} />
     </div>
   );
 }
