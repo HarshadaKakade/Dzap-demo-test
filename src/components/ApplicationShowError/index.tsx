@@ -16,7 +16,7 @@ const ApplicationShowError = ({ errorArray, isDuplicate }: {
                     errorArray.map((data, index) => {
                         let msg: string;
                         if (isDuplicate) {
-                            let lineNo = data.duplicateLineNo?.join(",")
+                            let lineNo = data.duplicateLineNo?.join(", ")
                             msg = data.duplicateLineNo?.length === 0 ? "" : `${data.label} duplicate in line: ${data.value}, ${lineNo}`
                         } else {
                             msg = data.addressAndAmountError ? `Line ${data.value} invalid Ethereum address and wrong amount`
