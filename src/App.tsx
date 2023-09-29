@@ -17,7 +17,7 @@ function App() {
   let [disableNext, setNextDisable] = useState(false)
 
   const onChnageAddress = (value: string) => {
-    let arrayOfAddress = value.split(" ")
+    let arrayOfAddress = value.split(/[\s\n]/)
     let newAddressList = arrayOfAddress.reduce((acc: any, cuurentAddress, nextAddress) => {
       let equalIndex = cuurentAddress.includes("=");
       let commaIndex = cuurentAddress.includes(",");
