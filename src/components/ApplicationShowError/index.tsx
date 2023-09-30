@@ -7,7 +7,7 @@ const ApplicationShowError = ({ errorArray, isDuplicate }: {
 }) => {
 
     return (
-        <div className='show-address-error flex flex-cols border-4 border-red-600 text-red-600 p-3 mt-10'>
+        <div className='show-address-error rounded-xl flex flex-cols border-4 border-red-600 text-red-600 p-3 mt-10'>
             <div className='flex flex-col gap-y-2'>
                 <div className='h-8 w-8 rounded-full border-4 border-red-600 text-center mr-3'>!</div>
             </div>
