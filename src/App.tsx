@@ -7,6 +7,7 @@ import './App.css';
 
 function App() {
   let [addresses, setAddress] = useState([{ label: "", value: "1", isActive: true }]);
+  let [addressesText, setAddressText] = useState(String)
   let [errorArray, setErrorArray] = useState<{
     label: string; value: string; isActive: boolean; labelLengthError: boolean;
     amountError: boolean; addressError: boolean; addressAndAmountError: boolean
@@ -16,31 +17,32 @@ function App() {
   }[]>([],);
   let [disableNext, setNextDisable] = useState(false)
 
-  const onChnageAddress = (value: string) => {
-    let arrayOfAddress = value.split(/[\s\n]/)
-    let newAddressList = arrayOfAddress.reduce((acc: any, cuurentAddress, nextAddress) => {
-      let equalIndex = cuurentAddress.includes("=");
-      let commaIndex = cuurentAddress.includes(",");
-      let newLabel = cuurentAddress.replace("\n","")
+  const onChnageAddress = (value: string, isNewAddress?: boolean) => {
+    let arrayOfAddress = value.split(/[\n]/)
+    let newAddressList = arrayOfAddress.reduce((acc: any, cuurentAddress) => {
+
       let details = {
-        label: "",
+        label: cuurentAddress,
         value: String(acc.length + 1),
         isActive: false
       }
-      if (equalIndex) {
-        details.label = newLabel
-        acc.push(details)
-      } else if (commaIndex) {
-        details.label = newLabel
-        acc.push(details)
-      } else if (cuurentAddress.length > 5) {
-        details.label = `${newLabel} ${arrayOfAddress[nextAddress + 1]}`
-        acc.push(details)
-      }
+
+      acc.push(details)
       return acc
     }, [],)
-    
+
+    if (isNewAddress) {
+      console.log("herere")
+      const newAddress = {
+        label: "",
+        value: String(newAddressList.length + 1),
+        isActive: true
+      }
+      newAddressList = [...newAddressList, newAddress]
+    }
+
     setAddress(newAddressList)
+    setAddressText(value)
   }
 
   const onClickNextButton = () => {
@@ -108,23 +110,27 @@ function App() {
   }
 
   const onClickKeepFirth = () => {
+    let updatedAddress: string = "";
     let removeDuplicate = addresses.reduce((acc: any, data) => {
       const index = acc.find((amount: any) => amount.label === data.label)
-      console.log("index",index)
+
       if (index === undefined) {
+        updatedAddress = `${updatedAddress}\n${data.label}`;
         acc.push(data)
       }
       return acc
     }, [])
-    console.log("removeDuplicate",removeDuplicate)
+
+    updatedAddress = updatedAddress.trimStart();
     setAddress(removeDuplicate)
     setDuplicateAddresses([])
     setNextDisable(false)
+    setAddressText(updatedAddress)
   }
 
   return (
     <div className="App w-full h-screen  p-10">
-      <ApplicationAddress options={addresses} onChnageAddress={onChnageAddress} />
+      <ApplicationAddress address={addressesText} options={addresses} onChnageAddress={onChnageAddress} />
       {
         errorArray.length !== 0 ?
           <ApplicationShowError errorArray={errorArray} isDuplicate={false} />
