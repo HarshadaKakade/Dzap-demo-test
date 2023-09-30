@@ -1,8 +1,8 @@
 import ApplicationInputFiled from '../ApplicationInputField';
-const ApplicationAddress = ({ options, onChnageAddress }: { options: { label: string; value: string, isActive: boolean }[], onChnageAddress: (arg: string) => void }) => {
+const ApplicationAddress = ({ address, options, onChnageAddress }: { address: string, options: { label: string; value: string, isActive: boolean }[], onChnageAddress: (arg: string, isNewAddress?:boolean) => void }) => {
 
-    const onChnageAddressFeild = (arg: string) => {
-        onChnageAddress(arg)
+    const onChnageAddressFeild = (arg: string, isNewAddress?:boolean) => {
+        onChnageAddress(arg, isNewAddress)
     }
     return (
         <div className="application-address w-full pt-10 bg-transparent">
@@ -25,14 +25,15 @@ const ApplicationAddress = ({ options, onChnageAddress }: { options: { label: st
                 </div>
 
                 <div className=' py-2 flex flex-col pl-3 gap-y-4'>
-                    {
+                <ApplicationInputFiled value={address} onChnageInputField={onChnageAddressFeild} />
+                    {/* {
                         options.map((data, index) => {
                             return (
                                 <div key={index} className='flex-col h-2'>
                                     {
                                         data.isActive ?
 
-                                            <ApplicationInputFiled value={data.label} onChnageInputField={onChnageAddressFeild} />
+                                            
 
                                             : <span key={index} className='text-white whitespace-pre-line'>
                                                 {data.label}
@@ -41,7 +42,7 @@ const ApplicationAddress = ({ options, onChnageAddress }: { options: { label: st
                                 </div>
                             )
                         })
-                    }
+                    } */}
                 </div>
             </div>
 
