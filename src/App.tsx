@@ -43,6 +43,7 @@ function App() {
 
     setAddress(newAddressList)
     setAddressText(value)
+    setNextDisable(false)
   }
 
   const onClickNextButton = () => {
